@@ -2,16 +2,19 @@ using NSwag.AspNetCore;
 using Backend.Models;
 using Microsoft.EntityFrameworkCore;
 
+const string applicationName = "CustomAPI";
+const string version = "v1";
+
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<CustomDatabaseContext>(options => options.UseSqlite("CustomAPI"));
+builder.Services.AddDbContext<CustomDatabaseContext>(options => options.UseSqlite(applicationName));
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument(config =>
 {
-    config.DocumentName = "CustomAPI";
-    config.Title = "CustomAPI v1";
-    config.Version = "v1";
+    config.DocumentName = applicationName;
+    config.Title = applicationName;
+    config.Version = version;
 });
 
 builder.Services.AddCors(options =>
