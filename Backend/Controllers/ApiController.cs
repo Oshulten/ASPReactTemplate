@@ -15,11 +15,12 @@ public class Custom : ControllerBase
         return entity is not null ? Ok((CustomDataTypeDTO)entity) : NotFound();
     }
 
-    [HttpPost()]
+    [HttpPost]
     public IActionResult Post(CustomDataTypeDTO dto, CustomDatabaseContext db)
     {
         var entity = (CustomDataType)dto;
         db.Add<CustomDataType>(entity);
+        db.SaveChanges();
         return CreatedAtAction(nameof(GetById), new { id = entity.Id }, null);
     }
 }
