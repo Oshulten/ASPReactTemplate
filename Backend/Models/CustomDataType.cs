@@ -1,13 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace Backend.Models
 {
-    public class CustomDataType
+    public class CustomDataType(string? dataString)
     {
-        public int Id { get; set; }
-        public string? DataString { get; set; }
+        public Guid Id { get; init; }
+        public string? DataString { get; set; } = dataString;
     }
 }
