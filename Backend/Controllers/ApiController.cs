@@ -15,6 +15,13 @@ public class Custom : ControllerBase
         return entity is not null ? Ok((CustomDataTypeDTO)entity) : NotFound();
     }
 
+    [HttpGet]
+    public ActionResult<List<CustomDataTypeDTO>> GetAll(CustomDatabaseContext db)
+    {
+        var entities = db.CustomData.ToList().Select(entity => (CustomDataTypeDTO)entity);
+        return Ok(entities);
+    }
+
     [HttpPost]
     public IActionResult Post(CustomDataTypeDTO dto, CustomDatabaseContext db)
     {
