@@ -1,4 +1,5 @@
 using Backend.Models;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
@@ -47,8 +48,13 @@ public class Custom : ControllerBase
     }
 
     [HttpDelete]
-    public IActionResult DeleteAll(CustomDatabaseContext db)
+    public IActionResult DeleteAll(string deleteAllKey, CustomDatabaseContext db)
     {
+        if (deleteAllKey != _deleteAllKey)
+        {
+            return Unauthorized();
+        }
+
         db.RemoveRange(db.CustomData.ToList());
         db.SaveChanges();
         return Ok();
