@@ -8,6 +8,8 @@ namespace Backend.Controllers;
 [Route("api/[controller]")]
 public class Custom : ControllerBase
 {
+    private readonly string _deleteAllKey = "clear-all";
+
     [HttpGet("{id}")]
     public ActionResult<CustomDataTypeDTO> GetById(Guid id, CustomDatabaseContext db)
     {
@@ -40,6 +42,14 @@ public class Custom : ControllerBase
             return NotFound();
         }
         db.Remove<CustomDataType>(entity);
+        db.SaveChanges();
+        return Ok();
+    }
+
+    [HttpDelete]
+    public IActionResult DeleteAll(CustomDatabaseContext db)
+    {
+        db.RemoveRange(db.CustomData.ToList());
         db.SaveChanges();
         return Ok();
     }
