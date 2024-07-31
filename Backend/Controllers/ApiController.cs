@@ -23,4 +23,17 @@ public class Custom : ControllerBase
         db.SaveChanges();
         return CreatedAtAction(nameof(GetById), new { id = entity.Id }, null);
     }
+
+    [HttpDelete("{id}")]
+    public IActionResult DeleteById(Guid id, CustomDatabaseContext db)
+    {
+        CustomDataType? entity = db.CustomData.FirstOrDefault(data => data.Id == id);
+        if (entity is null)
+        {
+            return NotFound();
+        }
+        db.Remove<CustomDataType>(entity);
+        db.SaveChanges();
+        return Ok();
+    }
 }
