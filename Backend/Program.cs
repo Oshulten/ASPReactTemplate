@@ -44,51 +44,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors("AllowAll");
 
-// app.MapPost("/custom-data-type", async (CustomDataType data, CustomDatabaseContext db) =>
-// {
-//     Console.WriteLine("Posting data");
-//     db.Add(data);
-//     await db.SaveChangesAsync();
-//     return Results.Created();
-// });
-
-// app.MapGet("/custom-data-type/{id}", (int id, CustomDatabaseContext db) =>
-// {
-//     try
-//     {
-//         CustomDataType entity = db.CustomData.First(data => data!.Id == id);
-//         return Results.Ok(entity);
-//     }
-//     catch (Exception)
-//     {
-//         return Results.NotFound();
-//     }
-// });
-
-// app.MapPut("/custom-data-type/{id}", async (int id, CustomDataType data, CustomDatabaseContext db) =>
-// {
-//     var dataFromDb = db.CustomData.First(data => data.Id == id);
-//     db.Update(dataFromDb);
-//     //update properties on dataFromDb
-//     await db.SaveChangesAsync();
-//     return Results.Accepted();
-// });
-
-// app.MapDelete("/custom-data-type/{id}", async (int id, CustomDatabaseContext db) =>
-// {
-//     try
-//     {
-//         CustomDataType entity = db.CustomData.First(data => data!.Id == id);
-//         db.Remove(entity);
-//         await db.SaveChangesAsync();
-//         return Results.Accepted();
-//     }
-//     catch (Exception)
-//     {
-//         return Results.NotFound();
-//     }
-// });
-
 app.UseHttpsRedirection();
 
 app.MapControllers();
