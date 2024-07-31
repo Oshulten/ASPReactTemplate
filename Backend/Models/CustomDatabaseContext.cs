@@ -8,8 +8,7 @@ namespace Backend.Models
 {
     public class CustomDatabaseContext : DbContext
     {
-        public DbSet<CustomDataType> CustomData { get; set; }
-
+        public DbSet<DefaultDataType> DefaultDataTable { get; set; }
         public string DbPath { get; }
         private string _databaseFileName = "custom.db";
 
