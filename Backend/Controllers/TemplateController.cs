@@ -19,21 +19,26 @@ public class TemplateController : ControllerBase
     private readonly string _deleteAllKey = "clear-all";
 
     [HttpGet("{id}")]
-    public ActionResult<DefaultDataTypeDto> GetById(Guid id, CustomDatabaseContext db)
+    public ActionResult<DefaultDataTypeView> GetById(Guid id, CustomDatabaseContext db)
     {
         DefaultDataType? entity = db.DefaultDataTable.FirstOrDefault(data => data.Id == id);
-        return entity is not null ? Ok((DefaultDataTypeDto)entity) : NotFound();
+        return entity is not null ? Ok((DefaultDataTypeView)entity) : NotFound();
     }
 
     [HttpGet]
-    public ActionResult<List<DefaultDataTypeDto>> GetAll(CustomDatabaseContext db)
+    public ActionResult<List<DefaultDataTypeView>> GetAll(CustomDatabaseContext db)
     {
-        var entities = db.DefaultDataTable.ToList().Select(entity => (DefaultDataTypeDto)entity);
+        if (!db.DefaultDataTable.Any())
+        {
+            db.DefaultDataTable!.AddRange(DefaultDataType.SeedData(10));
+        }
+        db.SaveChanges();
+        var entities = db.DefaultDataTable.ToList().Select(entity => (DefaultDataTypeView)entity);
         return Ok(entities);
     }
 
     [HttpPost]
-    public IActionResult Post(DefaultDataTypeDto dto, CustomDatabaseContext db)
+    public IActionResult Post(DefaultDataTypeView dto, CustomDatabaseContext db)
     {
         var entity = (DefaultDataType)dto;
         db.Add<DefaultDataType>(entity);

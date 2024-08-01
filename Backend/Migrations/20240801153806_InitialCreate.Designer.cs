@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Backend.Migrations
 {
     [DbContext(typeof(CustomDatabaseContext))]
-    [Migration("20240731201035_InitialCreate")]
+    [Migration("20240801153806_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -20,46 +20,22 @@ namespace Backend.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "8.0.7");
 
-            modelBuilder.Entity("Backend.Models.CDT2", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("DataString")
-                        .HasColumnType("TEXT");
-
-                    b.Property<Guid?>("ReferenceId")
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReferenceId");
-
-                    b.ToTable("CDT2Table");
-                });
-
             modelBuilder.Entity("Backend.Models.DefaultDataType", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DataString")
+                    b.Property<int>("Value1")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Value2")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("DefaultDataTable");
-                });
-
-            modelBuilder.Entity("Backend.Models.CDT2", b =>
-                {
-                    b.HasOne("Backend.Models.DefaultDataType", "Reference")
-                        .WithMany()
-                        .HasForeignKey("ReferenceId");
-
-                    b.Navigation("Reference");
                 });
 #pragma warning restore 612, 618
         }
