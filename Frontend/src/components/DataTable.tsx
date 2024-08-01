@@ -1,3 +1,4 @@
+import Identifiable from "../models/Identifiable";
 import useFetchCollection from "./../hooks/useFetch";
 import DataTableCell from "./DataTableCell";
 
@@ -5,24 +6,25 @@ type DataTableProps = {
     url: string;
 };
 
-export default function DataTable<DataType>({ url }: DataTableProps) {
+export default function DataTable<DataType extends Identifiable>({ url }: DataTableProps) {
     const data = useFetchCollection<DataType>(url) as DataType[];
 
     if (data && data.length > 0) {
         const firstElement = data[0] as object;
         const keys = Object.keys(firstElement);
         const headerRow = (
-            <tr>
+            <tr key={0}>
                 {keys.map((key) => (
                     <th>{key}</th>
                 ))}
             </tr>
         );
+
         const rows = data.map((datum) => (
-            <tr>
-                {Object.values(datum as DataType[]).map((value) => (
+            <tr key={datum.id}>
+                {Object.entries(datum).map(([key, value]) => (
                     <td>
-                        <DataTableCell id="1" onChange={() => console.log("changed")} value={(value as object).toString()} />
+                        <DataTableCell key={key} id={datum.id} value={value} onChange={() => console.log(`value: ${value}`)} />
                     </td>
                 ))}
             </tr>

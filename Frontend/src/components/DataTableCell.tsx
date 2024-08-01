@@ -1,14 +1,10 @@
-import { useState } from "react";
-
 type DataTableCellProps = {
     id: string;
-    onChange: (value: string) => void;
+    onChange: () => void;
     value: string;
 };
 
-export default function DataTableCell({ id, onChange, value }: DataTableCellProps) {
-    const [ownValue, setOwnValue] = useState(value);
-
+export default function DataTableCell({ onChange, value }: DataTableCellProps) {
     // useEffect(() => {
     //     async function patchValue<T>(setter: React.Dispatch<React.SetStateAction<T[] | undefined>>, url: string) {
     //         const response = await fetch(url);
@@ -27,5 +23,5 @@ export default function DataTableCell({ id, onChange, value }: DataTableCellProp
     //     fetchAll<DataType>(setData, url);
     // }, []);
 
-    return <input type="text" defaultValue={value} onChange={onChange(ownValue)} className="input input-bordered w-full max-w-xs" />;
+    return <input type="text" value={value} onChange={() => onChange()} className="input input-bordered w-full max-w-xs" />;
 }
