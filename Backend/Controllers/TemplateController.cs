@@ -22,7 +22,7 @@ public class TemplateController : ControllerBase
     public ActionResult<DefaultDataTypeView> GetById(Guid id, CustomDatabaseContext db)
     {
         DefaultDataType? entity = db.DefaultDataTable.FirstOrDefault(data => data.Id == id);
-        return entity is not null ? Ok((DefaultDataTypeView)entity) : NotFound();
+        return entity is not null ? Ok(entity) : NotFound();
     }
 
     [HttpGet]
@@ -33,7 +33,7 @@ public class TemplateController : ControllerBase
             db.DefaultDataTable!.AddRange(DefaultDataType.SeedData(10));
         }
         db.SaveChanges();
-        var entities = db.DefaultDataTable.ToList().Select(entity => (DefaultDataTypeView)entity);
+        var entities = db.DefaultDataTable.ToList().Select(entity => entity);
         return Ok(entities);
     }
 
