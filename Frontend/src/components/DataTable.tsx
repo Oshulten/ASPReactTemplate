@@ -1,11 +1,12 @@
-import useFetch from "./../hooks/useFetch";
+import useFetchCollection from "./../hooks/useFetch";
+import DataTableCell from "./DataTableCell";
 
 type DataTableProps = {
     url: string;
 };
 
 export default function DataTable<DataType>({ url }: DataTableProps) {
-    const data = useFetch<DataType>(url) as DataType[];
+    const data = useFetchCollection<DataType>(url) as DataType[];
 
     if (data && data.length > 0) {
         const firstElement = data[0] as object;
@@ -20,7 +21,9 @@ export default function DataTable<DataType>({ url }: DataTableProps) {
         const rows = data.map((datum) => (
             <tr>
                 {Object.values(datum as DataType[]).map((value) => (
-                    <td>{(value as object).toString()}</td>
+                    <td>
+                        <DataTableCell id="1" onChange={() => console.log("changed")} value={(value as object).toString()} />
+                    </td>
                 ))}
             </tr>
         ));
@@ -36,9 +39,5 @@ export default function DataTable<DataType>({ url }: DataTableProps) {
         );
     }
 
-    return (
-        <>
-            <p>Loading...</p>
-        </>
-    );
+    return <div className="skeleton h-32 w-32"></div>;
 }

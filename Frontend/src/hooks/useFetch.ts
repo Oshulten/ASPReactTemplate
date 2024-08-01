@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export default function useFetch<DataType>(url: string) {
+export default function useFetchCollection<DataType>(url: string) {
     const [data, setData] = useState<DataType[]>();
 
     useEffect(() => {
