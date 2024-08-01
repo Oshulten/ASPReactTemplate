@@ -37,6 +37,19 @@ public class TemplateController : ControllerBase
         return Ok(entities);
     }
 
+    [HttpPatch("{id}")]
+    public IActionResult PatchById(Guid id, DefaultDataType patchObject, CustomDatabaseContext db)
+    {
+        DefaultDataType? entity = db.DefaultDataTable.FirstOrDefault(data => data.Id == id);
+        if (entity is null)
+        {
+            return NotFound();
+        }
+        entity.Patch(patchObject);
+        db.SaveChanges();
+        return Ok();
+    }
+
     [HttpPost]
     public IActionResult Post(DefaultDataTypeView dto, CustomDatabaseContext db)
     {

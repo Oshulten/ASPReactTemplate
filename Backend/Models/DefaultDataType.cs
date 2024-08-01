@@ -11,6 +11,12 @@ namespace Backend.Models
         // An explicit parameterless constructor is required for database creation
         public DefaultDataType() : this(default, string.Empty) { }
 
+        public void Patch(DefaultDataType patchObject)
+        {
+            Value1 = patchObject.Value1;
+            Value2 = patchObject.Value2;
+        }
+
         public static List<DefaultDataType> SeedData(int numberOfDataPoints)
         {
             return Enumerable.Range(0, numberOfDataPoints)
