@@ -2,7 +2,7 @@ using NSwag.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Backend.Database;
-using Backend.Hubs.TemplateHub;
+using Backend.Hubs;
 
 const string applicationTitle = "TemplateApi";
 const string version = "v1";

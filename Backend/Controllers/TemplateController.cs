@@ -10,5 +10,9 @@ namespace Backend.Controllers;
 [Route("api/[controller]")]
 public class TemplateController(TemplateDatabaseContext context) : ControllerBase
 {
-
+    [HttpGet]
+    public string TemplateGreeting()
+    {
+        return "TemplateEndpoint";
+    }
 }

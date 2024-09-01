@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.SignalR;
 
-namespace Backend.Hubs.TemplateHub;
+namespace Backend.Hubs;
 
 public class TemplateHub : Hub
 {
