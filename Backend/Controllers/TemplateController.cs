@@ -8,7 +8,7 @@ namespace Backend.Controllers;
 
 [ApiController]
 [Route("api/[controller]")]
-public class TemplateController(CustomDatabaseContext context) : ControllerBase
+public class TemplateController(TemplateDatabaseContext context) : ControllerBase
 {
 
 }

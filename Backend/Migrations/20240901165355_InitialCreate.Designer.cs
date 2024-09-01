@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Backend.Migrations
 {
-    [DbContext(typeof(CustomDatabaseContext))]
+    [DbContext(typeof(TemplateDatabaseContext))]
     [Migration("20240901165355_InitialCreate")]
     partial class InitialCreate
     {
