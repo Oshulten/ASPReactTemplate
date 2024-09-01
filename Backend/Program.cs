@@ -2,8 +2,9 @@ using NSwag.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Backend.Database;
+using Backend.Hubs.TemplateHub;
 
-const string applicationTitle = "ChatroomApi";
+const string applicationTitle = "TemplateApi";
 const string version = "v1";
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,8 +13,8 @@ builder.Configuration.AddUserSecrets<Program>();
 builder.Services.AddDbContext<CustomDatabaseContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+builder.Services.AddSignalR();
 builder.Services.AddControllers();
-
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddOpenApiDocument(config =>
 {
@@ -62,6 +63,7 @@ app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapHub<TemplateHub>("/hub");
 
 app.Run();
 public partial class Program { }
