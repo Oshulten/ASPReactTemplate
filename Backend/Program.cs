@@ -1,13 +1,17 @@
 using NSwag.AspNetCore;
-using Backend.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Backend.Database;
 
-const string applicationTitle = "CustomAPI";
+const string applicationTitle = "ChatroomApi";
 const string version = "v1";
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddDbContext<CustomDatabaseContext>(options => options.UseSqlite(applicationTitle));
+builder.Configuration.AddUserSecrets<Program>();
+builder.Services.AddDbContext<CustomDatabaseContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
 builder.Services.AddControllers();
 
 builder.Services.AddEndpointsApiExplorer();
@@ -28,6 +32,14 @@ builder.Services.AddCors(options =>
     });
 });
 
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+        options.SlidingExpiration = true;
+        options.AccessDeniedPath = "/Forbidden/";
+    });
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
@@ -46,6 +58,10 @@ app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();
+public partial class Program { }

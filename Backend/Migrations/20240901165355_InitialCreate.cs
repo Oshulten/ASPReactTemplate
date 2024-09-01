@@ -15,9 +15,8 @@ namespace Backend.Migrations
                 name: "DefaultDataTable",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(type: "TEXT", nullable: false),
-                    Value1 = table.Column<int>(type: "INTEGER", nullable: false),
-                    Value2 = table.Column<string>(type: "TEXT", nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Value1 = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
