@@ -23,23 +23,7 @@ builder.Services.AddOpenApiDocument(config =>
     config.Version = version;
 });
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("AllowAll", builder =>
-    {
-        builder.AllowAnyOrigin()
-               .AllowAnyHeader()
-               .AllowAnyMethod();
-    });
-});
-
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-    .AddCookie(options =>
-    {
-        options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
-        options.SlidingExpiration = true;
-        options.AccessDeniedPath = "/Forbidden/";
-    });
+builder.Services.AddCors();
 
 var app = builder.Build();
 
@@ -55,15 +39,21 @@ if (app.Environment.IsDevelopment())
     });
 }
 
-app.UseCors("AllowAll");
+app.UseCors(options =>
+{
+    options.AllowAnyHeader()
+      .AllowAnyMethod()
+      .AllowCredentials()
+      .SetIsOriginAllowed(origin => true);
+});
 
 app.UseHttpsRedirection();
 
-app.UseAuthentication();
-app.UseAuthorization();
+// app.UseAuthentication();
+// app.UseAuthorization();
 
 app.MapControllers();
-app.MapHub<TemplateHub>("/hub");
+app.MapHub<NotificationHub>("/notifications");
 
 app.Run();
 public partial class Program { }

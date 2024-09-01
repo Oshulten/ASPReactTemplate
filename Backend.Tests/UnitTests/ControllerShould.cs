@@ -8,5 +8,5 @@ namespace Backend.Tests.Api;
 
 public class ControllerShould(CustomWebAppFactory factory) : IClassFixture<CustomWebAppFactory>
 {
-    private readonly HttpClient _client = factory.CreateClient();
+    private readonly HttpClient _client = factory.CreateClient(); 
 }
